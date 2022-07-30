@@ -1,0 +1,34 @@
+
+apt update && apt -y install docker.io
+
+service docker start
+
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s  https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl && sudo mv ./kubectl /bin/kubectl
+
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /bin/
+
+apt install conntrack -y
+
+minikube start --vm-driver=none
+
+GO TO https://github.com/mirantis/cri-dockerd#build-and-install
+
+
+THEN
+wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz
+sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /bin
+rm -f crictl-$VERSION-linux-amd64.tar.gz
+
+
+chmod +x /bin/crictl
+
+sudo chmod 666 /var/run/docker.sock
+
+
+
+minikube start --vm-driver=none
+
+
+minikube status
+
+kubectl get po -A
